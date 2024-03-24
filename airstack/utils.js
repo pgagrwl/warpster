@@ -4,11 +4,11 @@ require("dotenv").config();
 
 init(process.env.AIRSTACK_API_KEY);
 
-const getPoapCount = async (username) => {
+const getPoapCount = async (userFid) => {
   const query = `query POAPsOwnedByFarcasterUser {
         Poaps(
             input: {
-                filter: { owner: { _in: ["fc_fname:${username}"] } }
+                filter: { owner: { _in: ["fc_fid:${userFid}"] } }
                 blockchain: ALL
             }
             ) {
@@ -50,12 +50,12 @@ const getPoapCount = async (username) => {
   return poapCount.toString();
 };
 
-const getNFTCount = async (username) => {
+const getNFTCount = async (userFid) => {
   const query = `query NFTsOwnedByFarcasterUser {
     Ethereum: TokenBalances(
       input: {
         filter: {
-          owner: { _in: ["fc_fname:${username}"] }
+          owner: { _in: ["fc_fid:${userFid}"] }
           tokenType: { _in: [ERC1155, ERC721] }
         }
         blockchain: ethereum
@@ -93,7 +93,7 @@ const getNFTCount = async (username) => {
     Polygon: TokenBalances(
       input: {
         filter: {
-          owner: { _in: ["fc_fname:${username}"] }
+          owner: { _in: ["fc_fid:${userFid}"] }
           tokenType: { _in: [ERC1155, ERC721] }
         }
         blockchain: polygon
@@ -131,7 +131,7 @@ const getNFTCount = async (username) => {
     Base: TokenBalances(
       input: {
         filter: {
-          owner: { _in: ["fc_fname:${username}"] }
+          owner: { _in: ["fc_fid:${userFid}"] }
           tokenType: { _in: [ERC1155, ERC721] }
         }
         blockchain: base
