@@ -2,7 +2,7 @@ const express = require("express");
 const axios = require("axios");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const { getPoapCount, getNFTCount } = require("./../airstack/utils");
+// const { getPoapCount, getNFTCount } = require("./../airstack/utils");
 const { getUserData } = require("./../pinata/utils");
 
 const app = express();
@@ -141,10 +141,10 @@ app.get("/api/user-data/:fid", async (req, res) => {
   try {
     const fid = req.params.fid;
     const data = await getUserData(fid);
-    const NFTCount = await getNFTCount(fid);
-    const PoAPCount = await getPoapCount(fid);
-    data["NFTData"] = NFTCount;
-    data["PoApData"] = PoAPCount;
+    // const NFTCount = await getNFTCount(fid);
+    // const PoAPCount = await getPoapCount(fid);
+    // data["NFTData"] = NFTCount;
+    // data["PoApData"] = PoAPCount;
     console.log(data);
 
     res.send(data);
