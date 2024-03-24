@@ -137,31 +137,17 @@ app.post("/api/suggestion-extended-engagement", async (req, res) => {
   }
 });
 
-app.get("/api/poap-count/:username", async (req, res) => {
-  try {
-    const username = req.params.username;
-    const count = await getPoapCount(username);
-    res.send({ usernamfevae: username, poapCount: count });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
-app.get("/api/nft-count/:username", async (req, res) => {
-  try {
-    const username = req.params.username;
-    const count = await getNFTCount(username);
-    res.send({ username: username, NFTCount: count });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
 app.get("/api/user-data/:fid", async (req, res) => {
   try {
     const fid = req.params.fid;
     const data = await getUserData(fid);
-    res.json(JSON.parse(data));
+    const NFTCount = await getNFTCount(fid);
+    const PoAPCount = await getPoapCount(fid);
+    data["NFTData"] = NFTCount;
+    data["PoApData"] = PoAPCount;
+    console.log(data);
+
+    res.send(data);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
