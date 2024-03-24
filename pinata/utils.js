@@ -12,8 +12,8 @@ async function getUserData(fid) {
       }
     );
 
-    console.log(JSON.stringify(response.data));
-    return JSON.stringify(response.data);
+    // console.log(JSON.stringify(response.data));
+    return response.data;
   } catch (error) {
     console.error(error);
     throw new Error("Failed to fetch user data");
