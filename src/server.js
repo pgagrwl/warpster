@@ -2,6 +2,7 @@ const express = require("express");
 const axios = require("axios");
 const cors = require("cors");
 const bodyParser = require("body-parser");
+const { getPoapCount, getNFTCount } = require("./../airstack/utils");
 
 const app = express();
 const PORT = 3000;
@@ -132,6 +133,26 @@ app.post("/api/suggestion-extended-engagement", async (req, res) => {
       console.log("Error", error.message);
       res.status(500).send("Error making the request");
     }
+  }
+});
+
+app.get("/api/poap-count/:username", async (req, res) => {
+  try {
+    const username = req.params.username;
+    const count = await getPoapCount(username);
+    res.send({ usernamfevae: username, poapCount: count });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.get("/api/nft-count/:username", async (req, res) => {
+  try {
+    const username = req.params.username;
+    const count = await getNFTCount(username);
+    res.send({ username: username, NFTCount: count });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 });
 
