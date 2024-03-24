@@ -3,6 +3,7 @@ const axios = require("axios");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const { getPoapCount, getNFTCount } = require("./../airstack/utils");
+const { getUserData } = require("./../pinata/utils");
 
 const app = express();
 const PORT = 3000;
@@ -151,6 +152,16 @@ app.get("/api/nft-count/:username", async (req, res) => {
     const username = req.params.username;
     const count = await getNFTCount(username);
     res.send({ username: username, NFTCount: count });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.get("/api/user-data/:fid", async (req, res) => {
+  try {
+    const fid = req.params.fid;
+    const data = await getUserData(fid);
+    res.json(JSON.parse(data));
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
